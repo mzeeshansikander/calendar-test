@@ -14,7 +14,7 @@ const PRODUCTION_URL = process.env.NEXT_PUBLIC_API_URL as string;
  * Local URL that will be treated as global start-point and is connected to local backend or AWS Elastic API.
  */
 // const LOCAL_URL = "http://192.168.0.158:8080" as string;
-const LOCAL_URL = "http://localhost:8080/" as string;
+const LOCAL_URL = "http://localhost:8080" as string;
 
 
 /**

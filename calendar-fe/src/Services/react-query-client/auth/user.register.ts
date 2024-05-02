@@ -13,23 +13,25 @@ import { POST } from "../../axios.services";
 import toast from "react-hot-toast";
 
 // Custom Types Imports
-import { USER_LOGIN_PAYLOAD } from "../../../Types/types/payload-types/auth-payload";
+import { USER_REGISTRATION_PAYLOAD } from "../../../Types/types/payload-types/auth-payload";
 import { CustomAxiosErrorType } from "../../../Types/types/shared.types";
 
-export const UserLoginMutationHook = (): UseMutationResult<
+export const UserRegistrationMutationHook = (): UseMutationResult<
   unknown,
   Error,
-  USER_LOGIN_PAYLOAD
+  USER_REGISTRATION_PAYLOAD
 > => {
   const queryClient = useQueryClient();
 
-  const userLoginFn = async (payload: USER_LOGIN_PAYLOAD): Promise<unknown> => {
-    const response = await POST(URL.USER_LOGIN, payload);
+  const userRegisterFn = async (
+    payload: USER_REGISTRATION_PAYLOAD
+  ): Promise<unknown> => {
+    const response = await POST(URL.USER_REGISTER, payload);
     return response;
   };
 
   return useMutation({
-    mutationFn: userLoginFn,
+    mutationFn: userRegisterFn,
     onSuccess: (message, variables, context) => {
       return {
         message,
@@ -40,7 +42,7 @@ export const UserLoginMutationHook = (): UseMutationResult<
     onError: (error: CustomAxiosErrorType) => {
       console.error({ error });
 
-      toast.error(error?.response?.data?.message ?? "Login Failed");
+      toast.error(error?.response?.data?.message ?? "Registration Failed");
 
       return {
         error:

@@ -7,18 +7,25 @@ import UnprotectedLayout from "../../components/UnprotectedLayout";
 // Formik
 import { useFormik } from "formik";
 import { registerSchema } from "../../Schema/register.schema";
+import { UserRegistrationMutationHook } from "../../Services/react-query-client/auth/user.register";
+import { useNavigation } from "react-router-dom";
 
 const RegisterView = () => {
+
+  const router = useNavigation()
+  // Mutation
+  const { mutateAsync, isPending } = UserRegistrationMutationHook();
+
   // Initial Values Types
   type initialValuesT = {
-    username: string;
+    name: string;
     email: string;
     password: string;
   };
 
   // Formik Initial Values
   const initialValues: initialValuesT = {
-    username: "",
+    name: "",
     email: "",
     password: "",
   };
@@ -36,8 +43,10 @@ const RegisterView = () => {
     enableReinitialize: true,
     initialValues,
     validationSchema: registerSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log("$ Submitted", values);
+      const register = await mutateAsync(values);
+      console.log("$ Register", register);
       resetForm();
     },
   });
@@ -55,14 +64,16 @@ const RegisterView = () => {
               <h1 className="text-[50px] font-bold">Register</h1>
               <input
                 className="rounded-sm h-[42px] px-3"
-                name="username"
-                id="username"
-                value={values.username}
+                name="name"
+                id="name"
+                value={values.name}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder="Username"
               ></input>
-              {errors.username && touched.username && <p className="text-red-600 text-sm">{errors.username}</p>}
+              {errors.name && touched.name && (
+                <p className="text-red-600 text-sm">{errors.name}</p>
+              )}
               <input
                 className="rounded-sm h-[42px] px-3"
                 placeholder="Email"
@@ -72,7 +83,9 @@ const RegisterView = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               ></input>
-              {errors.email && touched.email && <p className="text-red-600 text-sm">{errors.email}</p>}
+              {errors.email && touched.email && (
+                <p className="text-red-600 text-sm">{errors.email}</p>
+              )}
               <input
                 className="rounded-sm h-[42px] px-3"
                 placeholder="Password"
@@ -82,9 +95,14 @@ const RegisterView = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               ></input>
-              {errors.password && touched.password && <p className="text-red-600 text-sm">{errors.password}</p>}
-              <button type="submit" className="border border-black rounded-md h-[40px]">
-                Sign Up
+              {errors.password && touched.password && (
+                <p className="text-red-600 text-sm">{errors.password}</p>
+              )}
+              <button
+                type="submit"
+                className="border border-black rounded-md h-[40px]"
+              >
+                {`Sign Up`}
               </button>
             </div>
           </div>

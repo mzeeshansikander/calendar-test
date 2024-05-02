@@ -8,5 +8,5 @@ export type USER_LOGIN_PAYLOAD = {
 export type USER_REGISTRATION_PAYLOAD = {
   email: string;
   password: string;
-  username: string;
+  name: string;
 };
