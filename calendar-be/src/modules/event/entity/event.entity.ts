@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import {
   Column,
   CreateDateColumn,
@@ -9,7 +10,10 @@ import {
 @Entity('event')
 export class Event {
   @ObjectIdColumn()
-  _id: string;
+  _id: ObjectId;
+
+  @Column()
+  owner: ObjectId;
 
   @Column({ type: 'string' })
   description: string;
