@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ObjectId } from 'typeorm';
+import { ObjectId } from 'mongodb';
 import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
 import { FindOptionsSelect } from 'typeorm/find-options/FindOptionsSelect';
 import { Repository } from 'typeorm/repository/Repository';
@@ -22,8 +22,8 @@ export class UserService {
     return this.repository.findOne({ where: { email }, relations, select });
   }
 
-  findById(_id: ObjectId) {
-    return this.repository.findOne({ where: { _id } });
+  findById(_id: ObjectId | string) {
+    return this.repository.findOne({ where: { _id: new ObjectId(_id) } });
   }
 
   register({ email, name, password }: UserRegisterDTO) {
