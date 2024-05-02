@@ -1,25 +1,6 @@
 import { Request } from 'express';
 import { User } from 'src/modules/user/entity/user.entity';
 
-export interface GenerateOTPOptions {
-  digits: boolean;
-  lowerCaseAlphabets: boolean;
-  upperCaseAlphabets: boolean;
-  specialChars: boolean;
-}
-
-export interface PaginationResponse<T> {
-  meta: Metadata;
-  data: T[];
-}
-
-export interface Metadata {
-  count: number;
-  limit: number;
-  page: number;
-  totalPages: number;
-}
-
 export interface RequestUser {
   user?: User;
 }
@@ -31,10 +12,4 @@ export interface CustomRequest extends Request {
 export enum AuthorizationHeader {
   BEARER = 'Bearer Authorization',
   BASIC = 'Authorization',
-}
-
-export enum RegexError {
-  ALPHABETIC = 'must only contain letters and spaces',
-  ALPHANUMERIC = 'must only contain letters, numbers, and spaces',
-  NUMERIC = 'must only contain numbers',
 }
