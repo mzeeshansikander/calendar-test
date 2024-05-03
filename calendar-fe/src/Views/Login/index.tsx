@@ -100,6 +100,7 @@ const LoginView = () => {
                 className="rounded-sm h-[42px] px-3"
                 placeholder="Password"
                 name="password"
+                type="password"
                 id="password"
                 value={values.password}
                 onChange={handleChange}

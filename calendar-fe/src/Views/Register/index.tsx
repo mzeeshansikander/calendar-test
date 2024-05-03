@@ -104,6 +104,7 @@ const RegisterView = () => {
                 placeholder="Password"
                 name="password"
                 id="password"
+                type="password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
