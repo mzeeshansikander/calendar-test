@@ -1,5 +1,4 @@
 // React
-import React from "react";
 
 // Layout Import
 import UnprotectedLayout from "../../components/UnprotectedLayout";
@@ -15,8 +14,8 @@ import { UserLoginMutationHook } from "../../Services/react-query-client/auth/us
 import toast from "react-hot-toast";
 
 // React-Router-DOM
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { updateToken, updateUser } from "../../redux/slices/user.slice";
 
 const LoginView = () => {
@@ -59,7 +58,9 @@ const LoginView = () => {
       try {
         const login: any = await mutateAsync(values);
         // Updating user state/token in redux
+        console.log(JSON.stringify(login.admin, null, 2));
         dispatch(updateUser(login.admin));
+        console.log(JSON.stringify(login.accessToken, null, 2));
         dispatch(updateToken(login.accessToken));
         console.log("$ Submitted", values);
         resetForm();
