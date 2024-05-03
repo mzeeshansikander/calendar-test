@@ -24,6 +24,9 @@ export class Event {
   @Column({ type: 'timestamp' })
   at: Date;
 
+  @Column({ type: 'string' })
+  color: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

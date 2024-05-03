@@ -33,6 +33,6 @@ export const URL = {
   GET_ALL_EVENTS : `${BASE_URL}/v1/event`,
   UPDATE_EVENT: (id:string)=> `${BASE_URL}/v1/event/${id}`,
   DELETE_EVENT: (id:string)=> `${BASE_URL}/v1/event/${id}`,
-  GET_MY_EVENTS : `${BASE_URL}/v1/event/my`
+  GET_MY_EVENTS : `${BASE_URL}/v1/event/my?limit=100`
 
 } as const;

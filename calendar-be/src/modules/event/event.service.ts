@@ -7,6 +7,7 @@ import { User } from '../user/entity/user.entity';
 import { EventCreateDTO } from './dto/create.dto';
 import { EventUpdateDTO } from './dto/update.dto';
 import { Event } from './entity/event.entity';
+import { generateRandomHexadecimalColor } from 'src/utils/app/generators/hex-color';
 
 @Injectable()
 export class EventService {
@@ -47,6 +48,7 @@ export class EventService {
       price,
       description,
       owner: user._id,
+      color: generateRandomHexadecimalColor()
     });
     return this.repository.save(event);
   }

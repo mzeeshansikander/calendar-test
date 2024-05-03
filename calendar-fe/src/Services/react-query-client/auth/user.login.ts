@@ -10,10 +10,10 @@ import { URL } from "../../api-base-urls";
 import { POST } from "../../axios.services";
 
 // Toast Import
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 
 // Custom Types Imports
-import { USER_LOGIN_PAYLOAD } from "../../../Types/types/payload-types/auth-payload";
+import { USER_LOGIN_PAYLOAD } from "../../../Types/types/payload-types/auth.payload";
 import { CustomAxiosErrorType } from "../../../Types/types/shared.types";
 
 export const UserLoginMutationHook = (): UseMutationResult<
@@ -40,7 +40,7 @@ export const UserLoginMutationHook = (): UseMutationResult<
     onError: (error: CustomAxiosErrorType) => {
       console.error({ error });
 
-      toast.error(error?.response?.data?.message ?? "Login Failed");
+      // toast.error(error?.response?.data?.message ?? "Login Failed");
 
       return {
         error:

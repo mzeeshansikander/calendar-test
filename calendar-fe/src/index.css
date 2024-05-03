@@ -99,11 +99,11 @@
 
 /* Full Calendar CSS */
 .events {
-  background-color: #5b1abd;
+  background-color: #fc95a4;
 }
 
 .dayCell {
-  background-color: rgb(207, 250, 255);
+  background-color: rgb(255, 255, 255);
   text-align: center;
   cursor: pointer;
 }

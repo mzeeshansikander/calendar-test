@@ -7,12 +7,20 @@ import UnprotectedLayout from "../../components/UnprotectedLayout";
 // Formik
 import { useFormik } from "formik";
 import { registerSchema } from "../../Schema/register.schema";
+
+// React-Query
 import { UserRegistrationMutationHook } from "../../Services/react-query-client/auth/user.register";
-import { useNavigation } from "react-router-dom";
+
+// Toast
+import toast from "react-hot-toast";
+
+// React-Router-DOM
+import { useNavigate } from "react-router-dom";
 
 const RegisterView = () => {
+  //
+  const navigate = useNavigate();
 
-  const router = useNavigation()
   // Mutation
   const { mutateAsync, isPending } = UserRegistrationMutationHook();
 
@@ -44,10 +52,15 @@ const RegisterView = () => {
     initialValues,
     validationSchema: registerSchema,
     onSubmit: async (values) => {
-      console.log("$ Submitted", values);
-      const register = await mutateAsync(values);
-      console.log("$ Register", register);
-      resetForm();
+      try {
+        const register = await mutateAsync(values);
+        console.log("$ Register", register);
+        toast.success("Registration Successful");
+        resetForm();
+        navigate("/login");
+      } catch (err) {
+        toast.error((err as any).response.data.message);
+      }
     },
   });
 
@@ -56,12 +69,12 @@ const RegisterView = () => {
       <>
         <form
           autoComplete="off"
-          className="w-full flex items-center justify-center"
+          className="w-full flex items-center justify-center md:h-fit h-full"
           onSubmit={handleSubmit}
         >
-          <div className="bg-gray-200 rounded-[30px] w-full max-w-[800px] flex items-center justify-center shadow-lg py-20">
+          <div className="bg-gray-200 rounded-[30px] w-full max-w-[800px] flex items-center justify-center shadow-lg py-20 px-5 h-full md:h-fit">
             <div className="w-full max-w-[570px] flex flex-col gap-[20px]">
-              <h1 className="text-[50px] font-bold">Register</h1>
+              <h1 className="text-[50px] font-bold md:mb-0 mb-10 md:text-left text-center">Register</h1>
               <input
                 className="rounded-sm h-[42px] px-3"
                 name="name"
@@ -102,8 +115,12 @@ const RegisterView = () => {
                 type="submit"
                 className="border border-black rounded-md h-[40px]"
               >
-                {`Sign Up`}
+                {isPending ?"Loading..." :`Sign Up`}
               </button>
+              <p>
+                Already have an account?{" "}
+                <span onClick={()=>navigate("/login")} className="cursor-pointer text-blue-950">Log In</span>
+              </p>
             </div>
           </div>
         </form>

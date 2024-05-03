@@ -5,30 +5,26 @@ import {
   UseMutationResult,
 } from "@tanstack/react-query";
 
-// API & Service Imports
+// Types
+import { EventPayloadT } from "../../../Types/types/payload-types/event.payload";
+import { CustomAxiosErrorType } from "../../../Types/types/shared.types";
+
+// Utils
 import { URL } from "../../api-base-urls";
 import { POST } from "../../axios.services";
 
-// Custom Types Imports
-import { USER_REGISTRATION_PAYLOAD } from "../../../Types/types/payload-types/auth.payload";
-import { CustomAxiosErrorType } from "../../../Types/types/shared.types";
-
-export const UserRegistrationMutationHook = (): UseMutationResult<
-  unknown,
-  Error,
-  USER_REGISTRATION_PAYLOAD
-> => {
+export const CreateEventHook = (
+  token: string
+): UseMutationResult<unknown, Error, EventPayloadT> => {
   const queryClient = useQueryClient();
 
-  const userRegisterFn = async (
-    payload: USER_REGISTRATION_PAYLOAD
-  ): Promise<unknown> => {
-    const response = await POST(URL.USER_REGISTER, payload);
+  const CreateEventFn = async (payload: EventPayloadT): Promise<unknown> => {
+    const response = await POST(URL.CREATE_EVENT, payload, token);
     return response;
   };
 
   return useMutation({
-    mutationFn: userRegisterFn,
+    mutationFn: CreateEventFn,
     onSuccess: (message, variables, context) => {
       return {
         message,
@@ -38,9 +34,6 @@ export const UserRegistrationMutationHook = (): UseMutationResult<
     },
     onError: (error: CustomAxiosErrorType) => {
       console.error({ error });
-
-      // toast.error(error?.response?.data?.message ?? "Registration Failed");
-
       return {
         error:
           error?.response?.data?.message ??
@@ -48,7 +41,7 @@ export const UserRegistrationMutationHook = (): UseMutationResult<
       };
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries({ queryKey: ["events"] });
     },
   });
 };
