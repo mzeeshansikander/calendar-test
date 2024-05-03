@@ -1,7 +1,9 @@
 /**
  * Base URL that will be treated as global start-point.
  */
-export const BASE_URL = process.env.REACT_APP_BASE_URL as string;
+
+// HARD CODED BECAUSE `nodejs` runtime not available in front-end after build. Hence, `process.env` does not work
+export const BASE_URL = "http://localhost:8000";
 
 export const URL = {
   // User Authentication
